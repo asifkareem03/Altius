@@ -28,7 +28,6 @@ body {
     flex-direction: column;
     border-radius: 10px;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
-    width: 350px;
     height: auto;
     background-color: #ffffff;
     padding: 20px;
@@ -48,6 +47,7 @@ body {
     border-color: #66bb6a;
     border-radius: 5px;
     min-width: 120px;
+    cursor: pointer;
 }
 
 .input-box {
@@ -144,4 +144,8 @@ small {
 
 .notification-close {
     cursor: pointer;
+}
+
+@media screen {
+    
 }
