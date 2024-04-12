@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="file-input-box">
+            <div class="input-box" onclick="openFileInput()">
+                <h4>
+                    <i class="fas fa-upload"></i>
+                    Choose File to upload
+                </h4>
+                <input type="file" id="fileInput" hidden multiple>
+            </div>
+            <small>Files Supported: .xlsx</small>
+            <div class="wrapper-file-section">
+                <div class="selected-files" id="selectedFiles">
+                    <h5>Selected Files</h5>
+                    <ul class="file-list" id="fileList"></ul>
+                </div>
+            </div>
+            <div class="button-wrap">
+                <button id="generateBtn">Generate</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingScreen">
+        <div class="loading-overlay"></div>
+        <div class="loading-container">
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+            </div>
+            <div class="loading-text">Generating PDF ...</div>
+        </div>
+    </div>
+    
+    <div id="notification">
+        <div class="notification is-success">
+            <span class="notification-message">Downloaded successfully</span>
+            <span class="notification-close">&times;</span>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $('#notification').hide();
+        $('#loadingScreen').hide();
+        function openFileInput() {
+            document.getElementById("fileInput").click();
+        }
+        $(document).ready(function () {
+            $('#fileInput').change(function () {
+                var fileList = $(this)[0].files;
+                var fileListContainer = $('#fileList');
+                fileListContainer.empty();
+                $.each(fileList, function (index, file) {
+                    var listItem = $('<li>').text(file.name + " (" + formatFileSize(file.size) + ")");
+                    fileListContainer.append(listItem);
+                });
+            });
+
+            function formatFileSize(size) {
+                const units = ["B", "KB", "MB", "GB"];
+                let index = 0;
+                while (size >= 1024 && index < units.length - 1) {
+                    size /= 1024;
+                    index++;
+                }
+                return `${size.toFixed(2)} ${units[index]}`;
+            }
+
+            $('#generateBtn').click(function () {
+                // Show loading spinner
+                $('#loadingScreen').show();
+
+                // Start spinner animation
+                $('.spinner').addClass('spin');
+
+                // Prepare form data
+                var formData = new FormData();
+                var fileInput = $('#fileInput')[0];
+                $.each(fileInput.files, function (index, file) {
+                    formData.append('file', file);
+                });
+
+                // Make AJAX request to the backend
+                $.ajax({
+                    url: '/process',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    xhrFields: {
+                        responseType: 'blob' // Set the response type to blob
+                    },
+                    success: function (data) {
+                        // Stop spinner animation
+                        $('.spinner').removeClass('spin');
+
+                        // Hide loading spinner
+                        $('#loadingScreen').hide();
+
+                        // Create a blob URL for the blob
+                        var url = window.URL.createObjectURL(data);
+
+                        // Create a link element to trigger the download
+                        var a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'output.zip';
+                        document.body.appendChild(a);
+                        a.click();
+
+                        // Cleanup
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+
+                        // Show success notification
+                        $('#notification').show();
+                        
+                        setTimeout(function() {
+                            $('#notification').hide();
+                        }, 5000);
+                    },
+                    error: function (xhr, status, error) {
+                        // Stop spinner animation
+                        $('.spinner').removeClass('spin');
+
+                        // Hide loading spinner
+                        $('#loadingScreen').hide();
+
+                        // Show error notification
+                        $('#notification').show();
+                    }
+                });
+            });
+
+            // Close notification when clicked
+            $('.notification-close').click(function () {
+                $('#notification').hide();
+            });
+        });
+    </script>
+</body>
+</html>

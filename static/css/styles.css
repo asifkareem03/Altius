@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+:root {
+    --tr: all 0.5s ease 0s;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: radial-gradient(circle at 50% 100%, #fafafa, #fafafa);
+    font-family: "Varela Round", sans-serif;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.file-input-box {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    width: 350px;
+    height: auto;
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+.button-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#generateBtn {
+    color: white;
+    background-color: #66bb6a;
+    height: 40px;
+    border: none;
+    border-color: #66bb6a;
+    border-radius: 5px;
+    min-width: 120px;
+}
+
+.input-box {
+    padding: 20px;
+    display: grid;
+    place-items: center;
+    border: 2px dashed #cacaca;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+small {
+    font-size: 12px;
+    color: #a3a3a3;
+}
+
+/* h5 {
+    margin: 5px;
+    padding: 5px;
+} */
+
+.wrapper-file-section {
+    .selected-files {
+        .file-list {
+            overflow-y: auto;
+            list-style-type: none;
+            padding: 0 10px 10px 0;
+            margin: 0;
+            transition: 0.3s all ease-in-out;
+        }
+    }
+}
+
+/* Loading Spinner Styles */
+#loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.loading-container {
+    text-align: center;
+}
+
+.loading-spinner {
+    margin-bottom: 20px; /* Add margin below the spinner */
+}
+
+.spinner {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 2s linear infinite;
+}
+
+.loading-text {
+    color: #fff;
+    font-size: 20px;
+}
+
+/* Spinner Animation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #66bb6a; /* Success background color */
+    color: #fff; /* Success text color */
+}
+
+.notification-message {
+    margin-right: 10px;
+}
+
+.notification-close {
+    cursor: pointer;
+}
