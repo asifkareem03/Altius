@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, send_file
 import os
-from werkzeug.utils import secure_filename
 import pandas as pd
 from docx import Document as Documentx
 from datetime import datetime, timedelta
@@ -14,7 +13,7 @@ import glob
 
 app = Flask(__name__)
 
-# Define the upload folder and allowed extensions
+# Define the upload folder and allowed extensions   
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'xlsx'}
 
@@ -210,4 +209,4 @@ def remove_files_with_extension(directory, extension):
             print(f"Failed to delete {file_path}. Reason: {e}")
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

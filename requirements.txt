@@ -1,7 +1,7 @@
 Flask
-Werkzeug
 python-docx
 docx2pdf
 spire.doc
 pandas
 openpyxl
+gunicorn
