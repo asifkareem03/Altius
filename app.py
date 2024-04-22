@@ -124,7 +124,7 @@ def fill_word_template(template_docx, data, output_folder):
         tables[1].cell(3, 4).text = f"Rs {final_amount}"
 
         # Update the final amount cell with the calculated value
-        final_amount_cell.text = f"{final_amount_cell.text} {final_amount}"
+        final_amount_cell.text = f"Total Amount to be Paid: {final_amount}"
         final_amount_cell.paragraphs[0].runs[0].font.color.rgb = original_font_color
 
         # Save the filled Word document for the current name in the temporary directory
