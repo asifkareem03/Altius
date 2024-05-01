@@ -66,6 +66,8 @@ def process_excel(xls, output_file):
                     fee += 100 if row[col] == 'Present' else 0
                 else:
                     fee += 250 if row[col] == 'Present' else 0
+        if fee > 1500:
+            fee = 1500
         return fee
 
     # Calculate fee based on the number of 'Present' occurrences in each row
